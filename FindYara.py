@@ -98,7 +98,7 @@ p_initialized = False
 
 
 
-class YaraSearchResultChooser(idaapi.Choose2):
+class YaraSearchResultChooser(idaapi.Choose):
     def __init__(self, title, items, flags=0, width=None, height=None, embedded=False, modal=False):
         idaapi.Choose2.__init__(
             self,
@@ -196,14 +196,14 @@ class FindYara_Plugin_t(idaapi.plugin_t):
         try:
             rules = yara.compile(yara_file)
         except:
-            print "ERROR: Cannot compile Yara rules from %s" % yara_file
+            print("ERROR: Cannot compile Yara rules from %s" % yara_file)
             return
         values = self.yarasearch(memory, offsets, rules)
         c = YaraSearchResultChooser("FindYara scan results", values)
         r = c.show()
 
     def yarasearch(self, memory, offsets, rules):
-        print ">>> Start yara search"
+        print(">>> Start yara search")
         values = list()
         matches = rules.match(data=memory)
         for rule_match in matches:
@@ -227,7 +227,7 @@ class FindYara_Plugin_t(idaapi.plugin_t):
                     match_type
                 ]
                 values.append(value)
-        print "<<< end yara search"
+        print("<<< end yara search")
         return values
 
     def _get_memory(self):
@@ -246,7 +246,7 @@ class FindYara_Plugin_t(idaapi.plugin_t):
     def run(self, arg):
         yara_file = idc.AskFile(0, "*.yara", 'Choose Yara File...')
         if yara_file == None:
-            print "ERROR: You must choose a yara file to scan with"
+            print("ERROR: You must choose a yara file to scan with")
         else:
             self.search(yara_file)
 
