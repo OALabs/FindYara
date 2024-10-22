@@ -81,7 +81,7 @@ try:
 
         @classmethod
         def update(self, ctx):
-            if ctx.form_type == idaapi.BWN_DISASM:
+            if ctx.widget_type == idaapi.BWN_DISASM:
                 return idaapi.AST_ENABLE_FOR_WIDGET
             return idaapi.AST_DISABLE_FOR_WIDGET
 
@@ -214,9 +214,9 @@ class FindYara_Plugin_t(idaapi.plugin_t):
     def yarasearch(self, memory, offsets, rules):
         values = list()
         matches = rules.match(data=memory)
-        for rule_match in matches:
-            name = rule_match.rule
-            for match in rule_match.strings:
+        for rule_match in matches['main']:
+            name = rule_match["rule"]
+            for match in rule_match["strings"]:
                 match_string = match[2]
                 match_type = 'unknown'
                 if all(chr(c) in string.printable for c in match_string):
