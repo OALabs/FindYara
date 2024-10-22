@@ -31,11 +31,11 @@ import ida_kernwin
 import yara
 import string
 
-__AUTHOR__ = '@herrcore'
+__AUTHOR__ = '@Ryoma'
 
 PLUGIN_NAME = "FindYara"
 PLUGIN_HOTKEY = "Ctrl-Alt-Y"
-VERSION = '3.3.0'
+VERSION = '0.0.1'
 
 try:
     class Kp_Menu_Context(idaapi.action_handler_t):
