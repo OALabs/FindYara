@@ -37,6 +37,14 @@ PLUGIN_NAME = "FindYara"
 PLUGIN_HOTKEY = "Ctrl-Alt-Y"
 VERSION = '3.3.0'
 
+major, minor = map(int, idaapi.get_kernel_version().split("."))
+
+IDA_9 = major >= 9
+if IDA_9:
+    BWN_DISASM = ida_kernwin.BWN_DISASM
+else:
+    BWN_DISASM = idaapi.BWN_DISASMS
+
 try:
     class Kp_Menu_Context(idaapi.action_handler_t):
         def __init__(self):
@@ -81,7 +89,7 @@ try:
 
         @classmethod
         def update(self, ctx):
-            if ctx.form_type == idaapi.BWN_DISASM:
+            if ctx.widget_type == BWN_DISASM:
                 return idaapi.AST_ENABLE_FOR_WIDGET
             return idaapi.AST_DISABLE_FOR_WIDGET
 
